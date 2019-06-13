@@ -1,22 +1,21 @@
 'use strict'
-// node --experimental-modules query.js
+// package.json: {"type": "module"}
+// node --experimental-modules querystring.js
 
 // modules START
 import querystring from 'querystring'
 // modules END
 
-let example_api_link = 'https://example.com/example/path?query1=${string1}&query2=${string2}&query3=${string3}'
-let information = { query1: 'example1', query2: 'example2', query3: 'example3'}
+let querystring_api = function (api, information) {
 
-let query_api = new URL(example_api_link)
+  let url = new URL(api)
+  // update search parameters of URL
+  let data = {...querystring.parse(url.query), ...information}
+  url.search = querystring.stringify(data)
+  return api
+}
 
-// update search parameters of URL
-let data = {...querystring.parse(query_api.query), ...information}
-query_api.search = querystring.stringify(data)
-
-// query_api.href: 'https://example.com/example/path?query1=example1&query2=example2&query3=example3'
-
-/* https://nodejs.org
+/* https://nodejs.org : structure of URL
  * ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
  * │                                              href                                              │
  * ├──────────┬──┬─────────────────────┬────────────────────────┬───────────────────────────┬───────┤
@@ -33,4 +32,5 @@ query_api.search = querystring.stringify(data)
  * │   origin    │                     │         origin         │ pathname │     search     │ hash  │
  * ├─────────────┴─────────────────────┴────────────────────────┴──────────┴────────────────┴───────┤
  * │                                              href                                              │
-*/ └────────────────────────────────────────────────────────────────────────────────────────────────┘
+ * └────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/
