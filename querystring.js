@@ -1,6 +1,10 @@
 'use strict'
+
+// node version: 12.4.0 [latest]
+// to use ECMAscript modules without using .mjs:
+// create package.json [recommended in root] and add this field to top level: "type": "module"
 // package.json: {"type": "module"}
-// node --experimental-modules query.js
+// node --experimental-modules querystring.js
 
 // modules START
 import url from 'url'
@@ -8,27 +12,37 @@ import querystring from 'querystring'
 // modules END
 
 let node_querystring = function (api = '', information = {}) {
+  // error START
   let error = 
     typeof api !== 'string' ?
-    `api must be string url, type of api is ${typeof api}.`
+    `first argument (api) must be string (url), type of api is ${Array.isArray(api) ? 'array' : typeof api}.`
     :
-    typeof information !== 'object' && !Array.isArray(information) ?
-    `information must be object, type of information is ${typeof information}.`
+    typeof information !== 'object' || Array.isArray(information) ?
+    `information must be object, type of information is ${Array.isArray(information) ? 'array' : typeof information}.`
     :
     undefined
   if (error !== undefined) return error
+  // error END
+  
   let data = url.parse(api, true)
-  // update search parameters of URL
   let { query } = data
   let keys = Object.keys(query)
+  
+  // update URL querystring START
   for (let key of keys) {
-    query[key] = information[key]
+    query[key] =
+      information[key] === undefined ?
+      query[key] // default value
+      :
+      information[key]
   }
   data.search = querystring.stringify(query)
+  // update URL querystring END
+  
   return url.format(data)
 }
 
-/* https://nodejs.org : structure of URL
+/* https://nodejs.org : URL structure
  * ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
  * │                                              href                                              │
  * ├──────────┬──┬─────────────────────┬────────────────────────┬───────────────────────────┬───────┤
