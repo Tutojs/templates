@@ -10,7 +10,7 @@ let token = function (template = '', information = {}, signs = ['${', '}']) {
     `second argument (information) must be object, type of information is ${typeof information}.`
     :
     !Array.isArray(signs) ?
-    `third argument (signs) must be array with 2 values, type of signs is ${typeof signs}.`
+    `third argument (signs) must be array, type of signs is ${typeof signs}.`
     :
     undefined
   if (error !== undefined) return error
