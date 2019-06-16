@@ -8,9 +8,15 @@ import querystring from 'querystring'
 // modules END
 
 let node_querystring = function (api = '', information = {}) {
-  if (typeof api !== 'string') return `api must be string url, type of api is ${typeof api}.`
-  if (typeof information !== 'object') return `information must be object, type of information is ${typeof information}.`
-
+  let error = 
+    typeof api !== 'string' ?
+    `api must be string url, type of api is ${typeof api}.`
+    :
+    typeof information !== 'object' && !Array.isArray(information) ?
+    `information must be object, type of information is ${typeof information}.`
+    :
+    undefined
+  if (error !== undefined) return error
   let data = url.parse(api, true)
   // update search parameters of URL
   let { query } = data
