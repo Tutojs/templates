@@ -24,13 +24,13 @@ let token = function (template = '', information = {}, signs = ['${', '}']) {
   // tag START
   let tag = [
     template.match(RegExp(`${signal[0]}.*?${signal[1]}`, 'gs')),
-    template.match(RegExp(`(?<=${signal[0]} *?)[^ ].*?(?= *?${signal[1]})`, 'gs'))
+    template.match(RegExp(`(?<=${signal[0]}\s*?)[^\s].*?(?=\s*?${signal[1]})`, 'gs'))
   ]
-  if (tag[0] === null) return template
-  let { length } = tag[0]
   // tag END
+  if (tag[0] === null) return template
 
   // regular for loop START
+  let { length } = tag[0]
   for (let i = 0 ; i < length; i++) {
     let key = tag[1][i]
     template = template.replace(
