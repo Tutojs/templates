@@ -42,7 +42,7 @@ let node_querystring = function (api = '', information = {}) {
   return url.format(data)
 }
 
-/* https://nodejs.org : URL structure
+/* URL structure: https://nodejs.org/api/url.html#url_url_strings_and_url_objects
  * ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
  * │                                              href                                              │
  * ├──────────┬──┬─────────────────────┬────────────────────────┬───────────────────────────┬───────┤
