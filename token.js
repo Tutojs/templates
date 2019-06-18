@@ -6,7 +6,7 @@ let token = function (template = '', information = {}, signs = ['${', '}']) {
     typeof template !== 'string' ?
     `first argument (template) must be string, type of template is ${Array.isArray(template) ? 'array' : typeof template}.`
     :
-    typeof information !== 'object' && !Array.isArray(information) ?
+    typeof information !== 'object' || Array.isArray(information) ?
     `second argument (information) must be object, type of information is ${Array.isArray(information) ? 'array' : typeof information}.`
     :
     !Array.isArray(signs) ?
