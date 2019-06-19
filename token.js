@@ -4,13 +4,13 @@ let token = function (template = '', information = {}, signs = ['${', '}']) {
   // error START
   let error =
     typeof template !== 'string' ?
-    `first argument (template) must be string, type of template is ${Array.isArray(template) ? 'array' : typeof template}.`
+      `first argument (template) must be string, type of template is ${Array.isArray(template) ? 'array' : typeof template}.`
     :
     typeof information !== 'object' || Array.isArray(information) ?
-    `second argument (information) must be object, type of information is ${Array.isArray(information) ? 'array' : typeof information}.`
+      `second argument (information) must be object, type of information is ${Array.isArray(information) ? 'array' : typeof information}.`
     :
     !Array.isArray(signs) ?
-    `third argument (signs) must be array, type of signs is ${typeof signs}.`
+      `third argument (signs) must be array, type of signs is ${typeof signs}.`
     :
     undefined
   if (error !== undefined) return error
