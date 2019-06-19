@@ -31,7 +31,8 @@ let tag = [
 ]
 // tag END
 
-// content START
+// contents START
+// for ... of loop START
 let contents = []
 for (let data of information) {
   let rawtemplate = template
@@ -48,7 +49,9 @@ for (let data of information) {
   }
   contents.push(rawtemplate)
 }
-// content END
+  // for ... of loop END
 
-return rawcontent.join(`${seperator}`)
+// contents END
+
+return contents.join(`${seperator}`)
 }
