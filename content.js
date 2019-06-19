@@ -4,16 +4,16 @@ let content = function (template = '', information = [], signs = ['${', '}'], se
   // error START
   let error =
   typeof template !== 'string' ?
-  `first argument (template) must be string, type of template is ${Array.isArray(template) ? 'array' : typeof template}.`
+    `first argument (template) must be string, type of template is ${Array.isArray(template) ? 'array' : typeof template}.`
   :
   !Array.isArray(information) ?
-  `second argument (information) must be array, type of information is ${typeof information}.`
+    `second argument (information) must be array, type of information is ${typeof information}.`
   :
   !Array.isArray(signs) ?
-  `third argument (signs) must be array, type of signs is ${typeof signs}.`
+    `third argument (signs) must be array, type of signs is ${typeof signs}.`
   :
   typeof seperator !== 'string' ?
-  `fourth argument (seperator) must be string, type of seperator is ${Array.isArray(seperator) ? 'array' : typeof seperator}.`
+    `fourth argument (seperator) must be string, type of seperator is ${Array.isArray(seperator) ? 'array' : typeof seperator}.`
   :
   undefined
 if (error !== undefined) return error
@@ -32,21 +32,21 @@ let tag = [
 // tag END
 
 // content START
-let rawcontent = []
-for (let key of information) {
+let contents = []
+for (let data of information) {
   let rawtemplate = template
-  let keys = tag[1]
-  for (let jey of keys) {
-    let index = tag[1].indexOf(jey)
+  for (let key of tag[1]) {
+    let index = tag[1].indexOf(key)
     let rawtag = tag[0][index]
     rawtemplate = rawtemplate.replace(
       rawtag,
-      key[jey] === undefined ?
-      tag[1][index] // default value 
+      data[key] === undefined ?
+      key // default value
       :
-      key[jey])
+      data[key]
+    )
   }
-  rawcontent.push(rawtemplate)
+  contents.push(rawtemplate)
 }
 // content END
 
