@@ -15,10 +15,10 @@ let node_querystring = function (api = '', information = {}) {
   // error START
   let error = 
     typeof api !== 'string' ?
-    `first argument (api) must be string (url), type of api is ${Array.isArray(api) ? 'array' : typeof api}.`
+      `first argument (api) must be string (url), type of api is ${Array.isArray(api) ? 'array' : typeof api}.`
     :
     typeof information !== 'object' || Array.isArray(information) ?
-    `information must be object, type of information is ${Array.isArray(information) ? 'array' : typeof information}.`
+      `information must be object, type of information is ${Array.isArray(information) ? 'array' : typeof information}.`
     :
     undefined
   if (error !== undefined) return error
