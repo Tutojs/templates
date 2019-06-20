@@ -25,33 +25,28 @@ let signal = signs.map(element => element.replace(/[.*+?^${}()<>|[\]\\]/g, '\\$&
 // custom signal signs END
 
 // tag START
-let tag = [
-  template.match(RegExp(`${signal[0]}.*?${signal[1]}`, 'gs')),
-  template.match(RegExp(`(?<=${signal[0]}\s*?)[^\s].*?(?=\s*?${signal[1]})`, 'gs'))
-]
+let tags = [...template.matchAll(RegExp(`${signal[0]}\s*?([^\s].*?)\s*?${signal[1]}`, 'gs'))]
 // tag END
 
 // contents START
-// for ... of loop START
 let contents = []
+// for ... of loop START
 for (let data of information) {
-  let rawtemplate = template
-  for (let key of tag[1]) {
-    let index = tag[1].indexOf(key)
-    let rawtag = tag[0][index]
+  let rawtemplate = template // reset template
+  for (let tag of tags) {
     rawtemplate = rawtemplate.replace(
-      rawtag,
-      data[key] === undefined ?
-      key // default value
+      tag[0],
+      data[tag[1]] === undefined ?
+      tag[1] // default value
       :
-      data[key]
+      data[tag[1]]
     )
   }
   contents.push(rawtemplate)
 }
-  // for ... of loop END
-
+// for ... of loop END
+contents = contents.join(seperator)
 // contents END
 
-return contents.join(`${seperator}`)
+return contents
 }
