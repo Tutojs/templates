@@ -25,7 +25,7 @@ let signal = signs.map(element => element.replace(/[.*+?^${}()<>|[\]\\]/g, '\\$&
 // custom signal signs END
 
 // tag START
-let tags = [...template.matchAll(RegExp(`${signal[0]}\s*?([^\s].*?)\s*?${signal[1]}`, 'gs'))]
+let tags = [...template.matchAll(RegExp(`${signal[0]}\\s*?([^\\s].*?)\\s*?${signal[1]}`, 'gs'))]
 // tag END
 
 // contents START
