@@ -21,56 +21,51 @@ let token = function (template = '', information = {}, signs = ['${', '}']) {
   let signal = signs.map(element => element.replace(/[.*+?^${}()<>|[\]\\]/g, '\\$&'))
   // custom signal signs END
   
-  // tag START
-  let tag = [
-    template.match(RegExp(`${signal[0]}.*?${signal[1]}`, 'gs')),
-    template.match(RegExp(`(?<=${signal[0]}\s*?)[^\s].*?(?=\s*?${signal[1]})`, 'gs'))
-  ]
-  // tag END
-  if (tag[0] === null) return template
-
-  // regular for loop START
-  let { length } = tag[0]
-  for (let i = 0 ; i < length; i++) {
-    let key = tag[1][i]
+  // tags START
+  let tags = [...template.matchAll(RegExp(`${signal[0]}\s*?([^\s].*?)\s*?${signal[1]}`, 'gs'))]
+  // tags END
+  
+  // for ... of loop START
+  for (let tag of tags) {
     template = template.replace(
-      tag[0][i],
-      information[key] === undefined ?
-      key // default value
+      tag[0],
+      information[tag[1]] === undefined ?
+      tag[1] // default value
       :
-      information[key]
+      information[tag[1]]
     )
   }
+  // for ... of loop END
+  
+  // regular for loop START
+  /*
+  let { length } = tags
+  for (let i = 0 ; i < length; i++) {
+    let tag = tags[i]
+    template = template.replace(
+      tag[0],
+      information[tag[1]] === undefined ?
+      tag[1] // default value
+      :
+      information[tag[1]]
+    )
+  }
+  */
   // regular for loop END
   
   // forEach loop START
   /*
-  tag[1].forEach((key, i) => {
+  tags.forEach(tag => {
     template = template.replace(
-      tag[0][i],
-      information[key] === undefined ?
-      key // default value
+      tag[0],
+      information[tag[1]] === undefined ?
+      tag[1] // default value
       :
-      information[key]
+      information[tag[1]]
     )
   })
   */
   // forEach loop END
 
-  // for ... of loop START
-  /*
-  for (let key of token[1]) {
-    template = template.replace(
-      tag[0][tag[1].indexOf(key)],
-      information[key] === undefined ?
-      key // default value
-      :
-      information[key]
-    )
-  }
-  */
-  // for ... of loop END
-
-  
   return template
 }
