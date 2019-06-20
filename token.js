@@ -22,7 +22,7 @@ let token = function (template = '', information = {}, signs = ['${', '}']) {
   // custom signal signs END
   
   // tags START
-  let tags = [...template.matchAll(RegExp(`${signal[0]}\s*?([^\s].*?)\s*?${signal[1]}`, 'gs'))]
+  let tags = [...template.matchAll(RegExp(`${signal[0]}\\s*?([^\\s].*?)\\s*?${signal[1]}`, 'gs'))]
   // tags END
   
   // for ... of loop START
