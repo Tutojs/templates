@@ -16,37 +16,37 @@ let content = function (template = '', information = [], signs = ['${', '}'], se
     `fourth argument (seperator) must be string, type of seperator is ${Array.isArray(seperator) ? 'array' : typeof seperator}.`
   :
   undefined
-if (error !== undefined) return error
-// error END
+  if (error !== undefined) return error
+  // error END
 
-// custom signal signs START
-// \\$& = \\: escaped '\'+ $&: match all substring
-let signal = signs.map(element => element.replace(/[.*+?^${}()<>|[\]\\]/g, '\\$&'))
-// custom signal signs END
+  // custom signal signs START
+  // \\$& = \\: escaped '\'+ $&: match all substring
+  let signal = signs.map(element => element.replace(/[.*+?^${}()<>|[\]\\]/g, '\\$&'))
+  // custom signal signs END
 
-// tag START
-let tags = [...template.matchAll(RegExp(`${signal[0]}\\s*?([^\\s].*?)\\s*?${signal[1]}`, 'gs'))]
-// tag END
+  // tag START
+  let tags = [...template.matchAll(RegExp(`${signal[0]}\\s*?([^\\s].*?)\\s*?${signal[1]}`, 'gs'))]
+  // tag END
 
-// contents START
-let contents = []
-// for ... of loop START
-for (let data of information) {
-  let rawtemplate = template // reset template
-  for (let tag of tags) {
-    rawtemplate = rawtemplate.replace(
-      tag[0],
-      data[tag[1]] === undefined ?
-      tag[1] // default value
-      :
-      data[tag[1]]
-    )
+  // contents START
+  let contents = []
+  // for ... of loop START
+  for (let data of information) {
+    let rawtemplate = template // reset template
+    for (let tag of tags) {
+      rawtemplate = rawtemplate.replace(
+        tag[0],
+        data[tag[1]] === undefined ?
+        tag[1] // default value
+        :
+        data[tag[1]]
+      )
+    }
+    contents.push(rawtemplate)
   }
-  contents.push(rawtemplate)
-}
-// for ... of loop END
-contents = contents.join(seperator)
-// contents END
+  // for ... of loop END
+  contents = contents.join(seperator)
+  // contents END
 
-return contents
+  return contents
 }
